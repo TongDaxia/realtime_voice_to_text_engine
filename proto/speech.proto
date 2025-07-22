@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package speech;
+
+option java_package = "com.tyg.speech.rpc";
+option java_outer_classname = "SpeechProto";
+
+message SpeechRequest {
+  bytes audio_data = 1;
+  string language = 2;  // 语言代码如"zh-CN"
+  int32 sample_rate = 3; // 采样率
+  optional bool interim_results = 4; // 是否返回中间结果
+}
+
+message SpeechResponse {
+  string text = 1;
+  bool is_final = 2;    // 是否为最终结果
+  float confidence = 3;  // 置信度
+  repeated string alternatives = 4; // 其他可能的识别结果
+}
+
+service Speech {
+  rpc Recognize (SpeechRequest) returns (SpeechResponse) {}
+  rpc StreamingRecognize (stream SpeechRequest) returns (stream SpeechResponse) {}
+}
