@@ -9,7 +9,6 @@ import torchaudio
 import grpc
 import soundfile as sf
 from concurrent import futures
-from typing import Optional, Dict
 from modelscope.pipelines import pipeline
 from modelscope.utils.constant import Tasks
 import speech_pb2
@@ -212,7 +211,8 @@ def serve(port=50051):
         ]
     )
     speech_pb2_grpc.add_SpeechServicer_to_server(SpeechServicer(), server)
-    server.add_insecure_port(f'[::]:{port}')
+    server.add_insecure_port(f'[::]:{port}') # IP6
+    server.add_insecure_port(f'0.0.0.0:{port}')  # IPv4
     server.start()
     logger.info(f"服务已启动，监听端口 {port}")
     try:
