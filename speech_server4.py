@@ -120,7 +120,6 @@ class SpeechServicer(speech_pb2_grpc.SpeechServicer):
         for request in request_iterator:
             if sample_rate is None:
                 sample_rate = request.sample_rate
-                logger.info(f"开始流式识别，采样率: {sample_rate} Hz")
 
             # 空包：客户端表示结束
             if not request.audio_data:
@@ -152,7 +151,6 @@ class SpeechServicer(speech_pb2_grpc.SpeechServicer):
             # 累积数据
             audio_buffer.extend(request.audio_data)
 
-            # 中间结果（可选）
             if request.interim_results and len(audio_buffer) > 1024:
                 try:
                     audio = self._audio_processor.bytes_to_audio(
