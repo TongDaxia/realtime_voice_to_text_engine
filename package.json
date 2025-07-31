@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "webrtcvad": "^1.0.1"
+  }
+}
