@@ -1,0 +1,5 @@
+# 单次识别
+python client.py --audio test_audio.m4a
+
+# 流式识别
+python client.py --audio test_audio.m4a --streaming
